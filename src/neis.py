@@ -9,10 +9,14 @@ __version__ = "1.0"
 class NeisPayslip:
     def __init__(self, neis_wb):
         self.sheet = neis_wb['Sheet1']
+        if self.sheet['B4'].value.replace(" ", "") != "급여명세서":
+            print(self.sheet['B4'].value)
+            raise ValueError
         self.employee_name = self.sheet['B6'].value
         self.employee_name = self.employee_name[-3:]  # 이름
         self.school_name = self.sheet['B8'].value
         self.school_name = self.school_name.split("]")[0][1:]  # 학교 이름
+        self.position = self.sheet['J9'].value  # 직종
         self.net_pay = 0
         """ 
         There are total three sections in the NIES excel

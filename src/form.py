@@ -8,6 +8,9 @@ class Form:
     """ 사용자가 제공할 기본 양식 파일 (명세서 상단부 위치한 테이블) eg. sample_input.xlsx """
     def __init__(self, wb):
         self.sheet = wb['Sheet1']
+        if self.sheet['B24'].value != "key=form":
+            raise KeyError
+
         self.info = dict()
 
     def get_info(self):

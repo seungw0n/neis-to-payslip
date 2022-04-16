@@ -4,6 +4,7 @@ from src.neis import NeisPayslip
 from src.payslip import SchoolPayslip
 from src.form import Form
 from openpyxl.styles import Font, colors, Color
+
 __author__ = "Seung Won Joeng - 정승원"
 __copyright__ = "Copyright (C) 2022 Seung Won Joeng All rights reserved."
 __license__ = "https://github.com/seungw0n/neis-to-payslip/blob/main/LICENSE"
@@ -33,10 +34,10 @@ def num_date():
     return day.day
 
 
-def match_names(neis_name, input_name):
-    if neis_name != input_name:
-        raise ValueError
-
+# def match_names(neis_name, input_name):
+#     if neis_name != input_name:
+#         raise ValueError
+#
 
 def top_field(sheet, neis_obj: NeisPayslip, form_obj: Form):
     """ 엑셀 상단부에 위치한 셀을 위한 함수 (날짜, 이름, 생년월일 등) """
@@ -44,6 +45,7 @@ def top_field(sheet, neis_obj: NeisPayslip, form_obj: Form):
         sheet: output 될 sheet
         filename: 양식으로 준 파일
     """
+    print("Function fill.py-top_field starts here")
     name = neis_obj.employee_name
     data = form_obj.info
 
@@ -84,6 +86,7 @@ def top_field(sheet, neis_obj: NeisPayslip, form_obj: Form):
 # Todo: Cell 채워넣기
 def monthly_field(sheet, school_obj: SchoolPayslip):  # range: C17 - C30, D17 - D30, F17 - F30
     """ 매월 지급 셀을 채워넣기 위한 함수 """  # title: C / description: D / amount: F
+    print("Function fill.py-monthly_field starts here")
     multiple_cells = sheet['C17': 'C30']
     for row in multiple_cells:
         for cell in row:
@@ -95,6 +98,7 @@ def monthly_field(sheet, school_obj: SchoolPayslip):  # range: C17 - C30, D17 - 
 
 def non_periodically_field(sheet, school_obj: SchoolPayslip):  # 31 - 38
     """ 부정기 지급 셀을 채워넣기 위한 함수 """
+    print("Function fill.py-non_periodically_field starts here")
     multiple_cells = sheet['C31': 'C38']  # 부정기 지급
     for row in multiple_cells:
         for cell in row:
@@ -106,6 +110,7 @@ def non_periodically_field(sheet, school_obj: SchoolPayslip):  # 31 - 38
 
 def rest_field(sheet, school_obj: SchoolPayslip):  # 39 - 44
     """ 기타금품 셀을 채워넣기 위한 함수 """
+    print("Function fill.py-rest_field starts here")
     multiple_cells = sheet['C39': 'C44']  # 기타금품
     for row in multiple_cells:
         for cell in row:
@@ -117,6 +122,7 @@ def rest_field(sheet, school_obj: SchoolPayslip):  # 39 - 44
 
 def deduction_field(sheet, school_obj: SchoolPayslip):  # G, H 17 - 33
     """ 공제(세금) 내역 셀을 채워넣기 위한 함수 """
+    print("Function fill.py-deduction_field starts here")
     multiple_cells = sheet['G17': 'G33']  # 공제(세금)
     for row in multiple_cells:
         for cell in row:
@@ -127,6 +133,7 @@ def deduction_field(sheet, school_obj: SchoolPayslip):  # G, H 17 - 33
 
 
 def total_field(sheet, school_obj: SchoolPayslip):
+    print("Function fill.py-total_field starts here")
     total_pay = school_obj.total['급여 총액']
     total_deduction = school_obj.total['공제(세금) 총액']
     net_pay = school_obj.total['실수령액']
@@ -136,63 +143,73 @@ def total_field(sheet, school_obj: SchoolPayslip):
     sheet['F46'] = net_pay
 
 
-if __name__ == "__main__":
-    """ Testing for this module """
-    form_filenames = ["../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx",
-                      "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx",
-                      "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx",
-                      "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx"]
-    # form_filename = "../.xlsx"
-    neis_filenames = ["../temp_april/neis/pbs_mnssd03_r01_2.xlsx", "../temp_april/neis/pbs_mnssd03_r01_3.xlsx",
-                      "../temp_april/neis/pbs_mnssd03_r01_4.xlsx", "../temp_april/neis/pbs_mnssd03_r01_5.xlsx",
-                      "../temp_april/neis/pbs_mnssd03_r01_6.xlsx", "../temp_april/neis/pbs_mnssd03_r01_7.xlsx",
-                      "../temp_april/neis/pbs_mnssd03_r01_8.xlsx", "../temp_april/neis/pbs_mnssd03_r01_9.xlsx",
-                      "../temp_april/neis/pbs_mnssd03_r01_10.xlsx", "../temp_april/neis/pbs_mnssd03_r01_11.xlsx",
-                      "../temp_april/neis/pbs_mnssd03_r01_12.xlsx", "../temp_april/neis/pbs_mnssd03_r01_13.xlsx",
-                      "../temp_april/neis/pbs_mnssd03_r01_14.xlsx", "../temp_april/neis/pbs_mnssd03_r01_15.xlsx",
-                      ]
+def fill(sheet, neis_obj: NeisPayslip, form_obj: Form, school_obj: SchoolPayslip):
+    print("Function fill.py-fill starts here")
+    top_field(sheet, neis_obj, form_obj)
+    monthly_field(sheet, school_obj)
+    non_periodically_field(sheet, school_obj)
+    rest_field(sheet, school_obj)
+    deduction_field(sheet, school_obj)
+    total_field(sheet, school_obj)
 
 
-    sample_filename = "../표준임금명세서_양식.xlsx"
-    for neis_filename in neis_filenames:
-        neis_wb = open_excel(neis_filename)
-        neis_obj = NeisPayslip(neis_wb)
-        neis_obj.get_pay()
-        neis_obj.get_tax()
-        neis_obj.get_deduction()
-
-        form_filename = "../temp_april/gojan/" + neis_obj.employee_name + ".xlsx"
-        try:
-            form_wb = open_excel(form_filename)
-        except FileNotFoundError:
-            continue
-
-        form_obj = Form(form_wb)
-        form_obj.get_info()
-
-        school_obj = SchoolPayslip(neis_obj, form_obj)
-        school_obj.match_pay()
-        school_obj.match_tax()
-        school_obj.match_deduction()
-        school_obj.match_total()
-        print(school_obj.monthly_pay)
-        print(school_obj.non_periodical_pay)
-        print(school_obj.rest_pay)
-        print(school_obj.deduction)
-        print(school_obj.total)
-
-        sample_wb = open_excel(sample_filename)
-        sample_sheet = sample_wb['Sheet1']
-
-        top_field(sample_sheet, neis_obj, form_obj)
-        monthly_field(sample_sheet, school_obj)
-        non_periodically_field(sample_sheet, school_obj)
-        rest_field(sample_sheet, school_obj)
-        deduction_field(sample_sheet, school_obj)
-        total_field(sample_sheet, school_obj)
-
-        # shift_right(sample_sheet)
-        save_excel(sample_wb, "임금명세서_" + neis_obj.employee_name + ".xlsx")
+# if __name__ == "__main__":
+#     """ Testing for this module """
+#     form_filenames = ["../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx",
+#                       "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx",
+#                       "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx",
+#                       "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx", "../temp_april/gojan/.xlsx"]
+#     # form_filename = "../.xlsx"
+#     neis_filenames = ["../temp_april/neis/pbs_mnssd03_r01_2.xlsx", "../temp_april/neis/pbs_mnssd03_r01_3.xlsx",
+#                       "../temp_april/neis/pbs_mnssd03_r01_4.xlsx", "../temp_april/neis/pbs_mnssd03_r01_5.xlsx",
+#                       "../temp_april/neis/pbs_mnssd03_r01_6.xlsx", "../temp_april/neis/pbs_mnssd03_r01_7.xlsx",
+#                       "../temp_april/neis/pbs_mnssd03_r01_8.xlsx", "../temp_april/neis/pbs_mnssd03_r01_9.xlsx",
+#                       "../temp_april/neis/pbs_mnssd03_r01_10.xlsx", "../temp_april/neis/pbs_mnssd03_r01_11.xlsx",
+#                       "../temp_april/neis/pbs_mnssd03_r01_12.xlsx", "../temp_april/neis/pbs_mnssd03_r01_13.xlsx",
+#                       "../temp_april/neis/pbs_mnssd03_r01_14.xlsx", "../temp_april/neis/pbs_mnssd03_r01_15.xlsx",
+#                       ]
+#
+#
+#     sample_filename = "../표준임금명세서_양식.xlsx"
+#     for neis_filename in neis_filenames:
+#         neis_wb = open_excel(neis_filename)
+#         neis_obj = NeisPayslip(neis_wb)
+#         neis_obj.get_pay()
+#         neis_obj.get_tax()
+#         neis_obj.get_deduction()
+#
+#         form_filename = "../temp_april/gojan/" + neis_obj.employee_name + ".xlsx"
+#         try:
+#             form_wb = open_excel(form_filename)
+#         except FileNotFoundError:
+#             continue
+#
+#         form_obj = Form(form_wb)
+#         form_obj.get_info()
+#
+#         school_obj = SchoolPayslip(neis_obj, form_obj)
+#         school_obj.match_pay()
+#         school_obj.match_tax()
+#         school_obj.match_deduction()
+#         school_obj.match_total()
+#         print(school_obj.monthly_pay)
+#         print(school_obj.non_periodical_pay)
+#         print(school_obj.rest_pay)
+#         print(school_obj.deduction)
+#         print(school_obj.total)
+#
+#         sample_wb = open_excel(sample_filename)
+#         sample_sheet = sample_wb['Sheet1']
+#
+#         top_field(sample_sheet, neis_obj, form_obj)
+#         monthly_field(sample_sheet, school_obj)
+#         non_periodically_field(sample_sheet, school_obj)
+#         rest_field(sample_sheet, school_obj)
+#         deduction_field(sample_sheet, school_obj)
+#         total_field(sample_sheet, school_obj)
+#
+#         # shift_right(sample_sheet)
+#         save_excel(sample_wb, "임금명세서_" + neis_obj.employee_name + ".xlsx")
 """
     # 1. neis 읽어오기
     neis_wb = open_excel(neis_filename)
