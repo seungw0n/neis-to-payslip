@@ -13,7 +13,7 @@
 
 ### 프로그램 사용 방법
 
-    - https://drive.google.com/drive/folders/1OkryYFAKQr9k5-WYc6q9GkozuDsPu2i5
+    - https://drive.google.com/drive/folders/1OkryYFAKQr9k5-WYc6q9GkozuDsPu2i5?usp=sharing
 1. 위 구글 드라이브 링크에서 개인별_급여기초정보, 임금명세서.exe, main.ui, payslip.xlsx 을 다운 받아주세요.
 
 
@@ -44,4 +44,4 @@
 7. 임금명세서 버튼을 클릭하시면, 실행프로그램이 있는 곳에 교부용 임금명세서 엑셀 파일이 생깁니다.
 
 
-보다 더 자세한 설명은 구글 드라이브 내에 임금명세서 자동화 프로그램 사용자 문서를 참조하시기바랍니다.
+*보다 더 자세한 설명은 구글 드라이브 내에 임금명세서 자동화 프로그램 사용자 문서를 참조하시기바랍니다.*
