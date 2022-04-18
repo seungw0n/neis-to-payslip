@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>494</width>
-    <height>147</height>
+    <height>168</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,7 +78,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>엑셀 양식</string>
+    <string>급여기초정보</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelSchoolName">
@@ -150,8 +150,8 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>120</y>
-     <width>451</width>
+     <y>140</y>
+     <width>481</width>
      <height>20</height>
     </rect>
    </property>
@@ -173,6 +173,22 @@
    </property>
    <property name="text">
     <string>임금명세서 생성</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>481</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>github: www.github.com/seungw0n/neis-to-payslip</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

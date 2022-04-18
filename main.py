@@ -1,8 +1,16 @@
+import os.path
 import subprocess
 import sys
 from src import excel, fill, form, neis, payslip
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
+
+__author__ = "Seung Won Joeng - 정승원"
+__copyright__ = "Copyright (C) 2021 Seung Won Joeng All rights reserved."
+__license__ = "https://github.com/seungw0n/neis-to-payslip/blob/main/LICENSE"
+__version__ = "1.0"
+__icon__ =  "https://icons8.com/icon/7979/구매-주문 by https://icons8.com"
+
 
 form_class = uic.loadUiType("main.ui")[0]
 
@@ -16,7 +24,7 @@ class WindowClass(QMainWindow, form_class):
         self.form_obj = None
 
     def initUI(self):
-        self.setWindowTitle("임금명세서 - Beta version")
+        self.setWindowTitle("교부용 임금명세서")
         self.selectNeis.clicked.connect(self.neis_button)
         self.selectForm.clicked.connect(self.form_button)
         self.createPayslip.clicked.connect(self.payslip_button)
@@ -103,12 +111,13 @@ class WindowClass(QMainWindow, form_class):
         #         rest_field(sample_sheet, school_obj)
         #         deduction_field(sample_sheet, school_obj)
         #         total_field(sample_sheet, school_obj)
-
-        out_wb = excel.open_excel("payslip.xlsx")
+        payslip_path = os.path.join(os.getcwd(), 'payslip.xlsx')  # 엑셀 양식
+        out_wb = excel.open_excel(payslip_path)
         out_sheet = out_wb['Sheet1']
         fill.fill(out_sheet, neis_obj=self.neis_obj, form_obj=self.form_obj, school_obj=school_obj)
         try:
-            excel.save_excel(out_wb, "./임금명세서_" + self.neis_obj.employee_name + ".xlsx")
+            path = os.path.join(os.getcwd(), "./임금명세서_" + self.neis_obj.employee_name + ".xlsx")
+            excel.save_excel(out_wb, path)
         except Exception as e:
             print(e)
 
@@ -119,3 +128,4 @@ if __name__ == "__main__":
     myWindow = WindowClass()
     myWindow.show()
     app.exec_()
+    #pyinstaller -w -F main.py
