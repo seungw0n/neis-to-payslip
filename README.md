@@ -1,5 +1,4 @@
-# 인천광역시 교육청 소속 무기계약직 임금 명세서 프로그램
-## Payslip for indefinite employee at Incheon Metropolitan City Office Of Education.
+## 인천광역시 교육청 소속 무기계약직 임금 명세서 프로그램
 
 ### Python Version
     - python 3.9
