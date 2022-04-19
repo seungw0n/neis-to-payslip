@@ -10,6 +10,11 @@
 본 프로그램은 Neis 에서 발급된 급여명세서와 개인별 급여기초정보를 이용하여
 교부용 임금명세서 엑셀 파일을 생성합니다.
 
+### Initial Screen
+
+![캡처1](https://user-images.githubusercontent.com/34816905/163906633-655e39c0-205b-4544-878b-43f19d66dcea.PNG)
+
+
 ### 프로그램 사용 방법
 
     https://drive.google.com/drive/folders/1OkryYFAKQr9k5-WYc6q9GkozuDsPu2i5?usp=sharing
