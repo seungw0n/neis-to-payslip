@@ -3,16 +3,22 @@
 ### Python Version
     - python 3.9
 
+### Python Packages
+    - pip3 install openpyxl
+    - pip3 install pyqt5
+    - pip3 install pyqt5designer
+
 ### Environment
     - Compatiable with Windows
-
-### 프로그램 소개
-본 프로그램은 Neis 에서 발급된 급여명세서와 개인별 급여기초정보를 이용하여
-교부용 임금명세서 엑셀 파일을 생성합니다.
 
 ### Initial Screen
 
 ![캡처1](https://user-images.githubusercontent.com/34816905/163906633-655e39c0-205b-4544-878b-43f19d66dcea.PNG)
+
+
+### 프로그램 소개
+본 프로그램은 Neis 에서 발급된 급여명세서와 개인별 급여기초정보를 이용하여
+교부용 임금명세서 엑셀 파일을 생성합니다.
 
 
 ### 프로그램 사용 방법
@@ -49,3 +55,9 @@
 
 
 *보다 더 자세한 설명은 구글 드라이브 내에 임금명세서 자동화 프로그램 사용자 문서를 참조하시기바랍니다.*
+
+### Released Notes
+#### 2022-04-12
+- The color of text: title and name of the organization are automatically set to Red. [Fixed]
+#### 2022-04-14
+- Packaging error: main.ui [Fixed]
