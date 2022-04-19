@@ -3,7 +3,7 @@
 ### Python Version
     - python 3.9
 
-### Python Packages
+### Installation
     - pip3 install openpyxl
     - pip3 install pyqt5
     - pip3 install pyqt5designer
