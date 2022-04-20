@@ -63,3 +63,5 @@
 - Packaging error: main.ui [Fixed]
 #### 2022-04-19
 - Not supported xls format. [Comment: open xls file using xlrd and convert to xlsx]
+#### 2022-04-20
+- Not supported blank and zero value (pay, tax, and deduction). It causes blank on the cells. [Will be fixed on Apr 21]
