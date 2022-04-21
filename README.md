@@ -23,7 +23,7 @@
 교부용 임금명세서 엑셀 파일을 생성합니다.
 
 
-### 프로그램 사용 방법
+### 프로그램 다운 및 실행법
 
     https://drive.google.com/drive/folders/1OkryYFAKQr9k5-WYc6q9GkozuDsPu2i5?usp=sharing
 1. 위 구글 드라이브 링크에서 개인별_급여기초정보, 임금명세서.exe, main.ui, payslip.xlsx 을 다운 받아주세요.
