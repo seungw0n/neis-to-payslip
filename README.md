@@ -62,6 +62,7 @@
 
 *보다 더 자세한 설명은 구글 드라이브 내에 임금명세서 자동화 프로그램 사용자 문서를 참조하시기바랍니다.*
 
+---
 ### Released Notes
 #### 2022-04-12
 - The color of text: title and name of the organization are automatically set to Red. [Fixed]
@@ -69,7 +70,6 @@
 - Packaging error: main.ui [Fixed]
 #### 2022-04-20
 - Not supported blank and zero value (pay, tax, and deduction). It causes blank on the cells. [Fixed on April 20]
-
-
+---
 ### Error
 - Not supported xls format. [Todo: open xls file using xlrd and convert to xlsx]
