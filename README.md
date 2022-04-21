@@ -25,10 +25,8 @@
 
 ### 프로그램 다운 및 실행법
 
-    Last updated on 2022.04.20 -- 최신 버전의 프로그램은 밑 구글 드라이브 주소에서 다운 받아주세요
+    Last updated on 2022.04.20 -- [임금명세서 다운로드 (구글드라이브)](https://drive.google.com/drive/folders/1OkryYFAKQr9k5-WYc6q9GkozuDsPu2i5?usp=sharing)
     
-
-    https://drive.google.com/drive/folders/1OkryYFAKQr9k5-WYc6q9GkozuDsPu2i5?usp=sharing
 
 1. 위 구글 드라이브 링크에서 개인별_급여기초정보, 임금명세서.exe, main.ui, payslip.xlsx 을 다운 받아주세요.
 
