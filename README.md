@@ -2,6 +2,7 @@
 #### *Excel 파일 확장자가 xls 일 경우 업로드가 안되는 오류가 발생되고 있습니다.*
 #### *Neis 급여명세서 저장 시 확장자를 xlsx 로 다운 받아주시기 부탁드립니다!*
 
+
 ### Initial Screen
 
 ![캡처1](https://user-images.githubusercontent.com/34816905/163906633-655e39c0-205b-4544-878b-43f19d66dcea.PNG)
