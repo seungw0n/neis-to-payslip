@@ -1,18 +1,6 @@
 ## 인천광역시 교육청 교육감 소속 근로자 임금 명세서 프로그램
 #### *Excel 파일 확장자가 xls 일 경우 업로드가 안되는 오류가 발생되고 있습니다.*
 #### *Neis 급여명세서 저장 시 확장자를 xlsx 로 다운 받아주시기 부탁드립니다!*
----
-### Python Version
-    - python 3.9
-
-### Installation
-    - pip3 install openpyxl
-    - pip3 install pyqt5
-    - pip3 install pyqt5designer
-
-### Environment
-    - Compatiable with Windows
----
 
 ### Initial Screen
 
@@ -20,12 +8,13 @@
 
 
 ### 프로그램 소개
+---
 본 프로그램은 Neis 에서 발급된 급여명세서와 개인별 급여기초정보를 이용하여
 교부용 임금명세서 엑셀 파일을 생성합니다.
 
----
-### 프로그램 다운 및 실행법
 
+### 프로그램 다운 및 실행법
+---
     Last updated on 2022.04.20
 
 .
@@ -63,15 +52,32 @@
 
 *보다 더 자세한 설명은 구글 드라이브 내에 임금명세서 자동화 프로그램 사용자 문서를 참조하시기바랍니다.*
 
+
+### Python Version
 ---
+    - python 3.9
+
+### Installation
+---
+    - pip3 install openpyxl
+    - pip3 install pyqt5
+    - pip3 install pyqt5designer
+
+### Environment
+---
+    - Compatiable with Windows
+
+
 ### Released Notes
+---
 #### 2022-04-12
 - The color of text: title and name of the organization are automatically set to Red. [Fixed]
 #### 2022-04-14
 - Packaging error: main.ui [Fixed]
 #### 2022-04-20
 - Not supported blank and zero value (pay, tax, and deduction). It causes blank on the cells. [Fixed on April 20]
----
+
 ### Error
-- Not supported xls format. [Todo: open xls file using xlrd and convert to xlsx]
 ---
+- Not supported xls format. [Todo: open xls file using xlrd and convert to xlsx]
+
