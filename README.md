@@ -5,13 +5,13 @@
 
 ![캡처1](https://user-images.githubusercontent.com/34816905/163906633-655e39c0-205b-4544-878b-43f19d66dcea.PNG)
 
-
+---
 ### 프로그램 소개
 ---
 본 프로그램은 Neis 에서 발급된 급여명세서와 개인별 급여기초정보를 이용하여
 교부용 임금명세서 엑셀 파일을 생성합니다.
 
-
+---
 ### 프로그램 다운 및 실행법
 ---
     Last updated on 2022.04.20
@@ -51,7 +51,7 @@
 
 *보다 더 자세한 설명은 구글 드라이브 내에 임금명세서 자동화 프로그램 사용자 문서를 참조하시기바랍니다.*
 
-
+---
 ### Python Version
 ---
     - python 3.9
@@ -62,11 +62,13 @@
     - pip3 install pyqt5
     - pip3 install pyqt5designer
 
+---
 ### Environment
 ---
     - Compatiable with Windows
 
 
+---
 ### Released Notes
 ---
 #### 2022-04-12
@@ -76,6 +78,7 @@
 #### 2022-04-20
 - Not supported blank and zero value (pay, tax, and deduction). It causes blank on the cells. [Fixed on April 20]
 
+---
 ### Error
 ---
 - Not supported xls format. [Todo: open xls file using xlrd and convert to xlsx]
