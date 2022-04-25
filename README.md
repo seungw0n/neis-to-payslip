@@ -7,7 +7,7 @@
 ---
     Last updated on 2022.04.20
 
-다운로드: 
+다운로드 (옆 주소 클릭 후 "표준임금명세서_작성_프로그램" 폴더를 우클릭 후 다운로드):
     https://drive.google.com/drive/folders/1OkryYFAKQr9k5-WYc6q9GkozuDsPu2i5?usp=sharing
 
 
