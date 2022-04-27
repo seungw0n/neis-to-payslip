@@ -11,7 +11,7 @@
     4. 밑 파일형식 -> Excel 통합문서 선택
     5. 저장하기
     
-#### *보안 프로그램에 걸리는 이유는 "코드서명인증서"를 추가 안해서 그렇습니다.. 오해가 생길 수 있어 모든 코드를 오픈한 것입니다.* [자세히 알아보기 - ](https://blog.dramancompany.com/2015/12/%EC%B2%98%EC%9D%8C-windows-%EC%84%A4%EC%B9%98-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%B0%ED%8F%AC%ED%95%98%EB%8A%94-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EC%9C%84%ED%95%98%EC%97%AC/)
+#### *보안 프로그램에 걸리는 이유는 "코드서명인증서"를 추가 안해서 그렇습니다.. 오해가 생길 수 있어 모든 코드를 오픈한 것입니다.* [자세히 알아보기 - by Tom Kim](https://blog.dramancompany.com/2015/12/%EC%B2%98%EC%9D%8C-windows-%EC%84%A4%EC%B9%98-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%B0%ED%8F%AC%ED%95%98%EB%8A%94-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EC%9C%84%ED%95%98%EC%97%AC/)
 
 ### 프로그램 다운로드
 ---
