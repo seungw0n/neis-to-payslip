@@ -8,7 +8,6 @@ from openpyxl.styles import Font, colors, Color
 __author__ = "Seung Won Joeng - 정승원"
 __copyright__ = "Copyright (C) 2022 Seung Won Joeng All rights reserved."
 __license__ = "https://github.com/seungw0n/neis-to-payslip/blob/main/LICENSE"
-__version__ = "1.0"
 
 year = datetime.datetime.now().year
 month = datetime.datetime.now().month

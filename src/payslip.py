@@ -2,16 +2,16 @@ from src.neis import NeisPayslip
 from src.form import Form
 import math
 
-
 __author__ = "Seung Won Joeng - 정승원"
 __copyright__ = "Copyright (C) 2021 Seung Won Joeng All rights reserved."
 __license__ = "https://github.com/seungw0n/neis-to-payslip/blob/main/LICENSE"
-__version__ = "1.0"
+
 
 def round_down(number):
     number = number / 10
     number = math.trunc(number)
     return number * 10
+
 
 def get_time(time):
     if time == 0 or time == "0" or time == "0시간":
@@ -37,6 +37,7 @@ def get_time(time):
         r_min = "0"
 
     return int(r_hour), int(r_min)
+
 
 class SchoolPayslip:
     def __init__(self, neis_obj: NeisPayslip, form_obj: Form):

@@ -1,7 +1,6 @@
 __author__ = "Seung Won Joeng - 정승원"
 __copyright__ = "Copyright (C) 2022 Seung Won Joeng All rights reserved."
 __license__ = "https://github.com/seungw0n/neis-to-payslip/blob/main/LICENSE"
-__version__ = "1.0"
 
 
 class Form:
@@ -17,7 +16,6 @@ class Form:
         self.info['성명'] = self.sheet['C3'].value  # 성명
         self.info['생년월일'] = self.sheet['E3'].value  # 생년월일
         self.info['직종명'] = self.sheet['G3'].value  # 직종명
-
         self.info['계약기간'] = self.sheet['C4'].value  # 계약기간
         self.info['근무형태'] = self.sheet['E4'].value  # 근무형태
         self.info['주 소정근로시간'] = self.sheet['G4'].value  # 주 소정근로시간

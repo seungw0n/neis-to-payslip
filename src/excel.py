@@ -1,4 +1,5 @@
 import openpyxl
+import xlrd
 from openpyxl.styles import Alignment
 
 
@@ -29,3 +30,32 @@ def shift_right(sheet):
     for s in lst2:
         currentCell = sheet[s]
         currentCell.alignment = Alignment(horizontal='right', vertical="center")
+
+
+def read_xls(filename):
+    try:
+        return xlrd.open_workbook(filename)
+    except FileNotFoundError:
+        print("[read_xls] Cannot find: " + filename)
+        raise
+
+
+def NEIS_payslip_xls(sheet):
+    result = []
+    for rx in range(sheet.nrows):
+        for c in range(len(sheet.row(rx))):
+            if sheet.row(rx)[c].value != '':
+                result.append(sheet.row(rx)[c].value)
+
+    return result
+
+
+def NEIS_payslip_xlsx(sheet):
+    result = []
+    for r in sheet.iter_rows():
+        for cell in r:
+            if cell.value is not None:
+                result.append(cell.value)
+
+    return result
+

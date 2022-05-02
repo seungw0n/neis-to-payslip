@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import *
 __author__ = "Seung Won Joeng - 정승원"
 __copyright__ = "Copyright (C) 2021 Seung Won Joeng All rights reserved."
 __license__ = "https://github.com/seungw0n/neis-to-payslip/blob/main/LICENSE"
-__version__ = "1.0"
 __icon__ =  "https://icons8.com/icon/7979/구매-주문 by https://icons8.com"
 
 
@@ -30,7 +29,7 @@ class WindowClass(QMainWindow, form_class):
         self.createPayslip.clicked.connect(self.payslip_button)
 
     def neis_button(self):
-        filepath = QFileDialog.getOpenFileName(self, "Select a Excel File", filter="*.xlsx")
+        filepath = QFileDialog.getOpenFileName(self, "Select a Excel File", filter="*.xlsx *.xls")
         print("Filepath : " + str(filepath))
 
         if filepath != ('', ''):
