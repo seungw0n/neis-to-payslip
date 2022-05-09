@@ -10,12 +10,12 @@ def open_excel(filename, data_only=True):
         return document
     except FileNotFoundError:
         print("[open_excel] Cannot find: " + filename)
-        raise
+        raise FileNotFoundError
     # print(type(document))  # to test
 
 
 def save_excel(wb, filename):
-    print("Function excel.py-save_excel starts here")
+    print("Function excel.save_excel starts here")
     wb.save(filename)
 
 

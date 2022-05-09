@@ -1,173 +1,147 @@
-from src.neis import NeisPayslip
+from src.neis import NEISPayslip
 from src.form import Form
-import math
+from openpyxl.styles import Font, colors, Color
+
+import datetime
 
 __author__ = "Seung Won Joeng - 정승원"
 __copyright__ = "Copyright (C) 2021 Seung Won Joeng All rights reserved."
 __license__ = "https://github.com/seungw0n/neis-to-payslip/blob/main/LICENSE"
 
 
-def round_down(number):
-    number = number / 10
-    number = math.trunc(number)
-    return number * 10
+def read_only_str(value: str):
+    if isinstance(value, str):
+        """ 수당명 contains only space, new line. """
+        result = value.replace(" ", "")
+        result = result.replace("\n", "")
+        return result
+    else:
+        return None
 
 
-def get_time(time):
-    if time == 0 or time == "0" or time == "0시간":
-        return 0, 0
-
-    r_hour = ""
-    r_min = ""
-    temp = ""
-
-    for t in time:
-        if '0' <= t <= '9':
-            temp = temp + t
-        else:
-            if t == "시":
-                r_hour = r_hour + temp
-            elif t == "분":
-                r_min = r_min + temp
-            temp = ""
-
-    if r_hour == "":
-        r_hour = "0"
-    if r_min == "":
-        r_min = "0"
-
-    return int(r_hour), int(r_min)
+def pay_date(month, year):
+    days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
+    pay_day = days[datetime.date(year, month, 17).weekday()]
+    if pay_day == 'SAT':
+        return 16
+    elif pay_day == 'SUN':
+        return 15
+    return 17
 
 
-class SchoolPayslip:
-    def __init__(self, neis_obj: NeisPayslip, form_obj: Form):
-        self.neis_obj = neis_obj
-        self.form_obj = form_obj
-        if neis_obj.employee_name != form_obj.info['성명']:
-            raise ValueError
+def num_date(month, year):
+    if month != 12:
+        day = datetime.date(year, month + 1, 1)
+    else:
+        day = datetime.date(year + 1, 1, 1)
 
-        self.monthly_pay = {'기본급': 0, '정액급식비': 0, '근속수당': 0, '위험근무수당': 0, '영양사면허가산수당': 0, '정근수당가산금': 0, '정근수당추가가산금': 0,
-                            '관리업무수당(일반직)': 0, '직급보조비': 0, '면허수당': 0, '자격수당': 0, '직무수당': 0, '특수업무수당': 0, '특수지원수당': 0}
-        self.non_periodical_pay = {'연장근로수당': 0, '휴일근로수당': 0, '야간근로수당': 0, '명절휴가비': 0, '정기상여금': 0, '성과상여금': 0, '정근수당': 0,
-                                   '연차유급휴가미사용수당': 0}
-        self.rest_pay = {'가족수당(배우자)': 0, '가족수당\n(직계존속, 첫째자녀)': 0, '가족수당\n(둘째자녀)': 0, '가족수당\n(셋째자녀 이후)': 0,
-                         '가족수당\n(부양가족)': 0, '기타수당': 0}
-
-        self.deduction = {'소득세': 0, '지방소득세': 0, '건강보험': 0, '건강보험연말정산': 0, '노인장기요양보험': 0, '장기요양연말정산': 0, '국민연금': 0,
-                          '고용보험': 0, '고용보험연말정산': 0, '교직원공제회비': 0, '친목회비': 0, '식대': 0, '연말정산소득세': 0, '연말정산지방소득세': 0,
-                          '중도정산소득세': 0, '중도정산지방소득세': 0, '기타공제': 0}
-
-        self.children = {'first': 0, 'second': 0, 'others': 0}
-
-        self.total = {'급여 총액': 0, '공제(세금) 총액': 0, '실수령액': 0}
-
-    def set_children(self, total_pay):
-        if total_pay == 0:
-            return
-        if total_pay == 20000:  # first only
-            self.children['first'] = 1
-        elif total_pay == 60000:  # second only
-            self.children['second'] = 1
-        elif total_pay == 80000:  # first + second only
-            self.children['first'] = 1
-            self.children['second'] = 1
-        elif (total_pay - 80000) % 100000 == 0:  # first + second + others
-            self.children['first'] = 1
-            self.children['second'] = 1
-            self.children['others'] = int((total_pay - 80000) / 100000)
-        elif (total_pay - 60000) % 100000 == 0:  # second + others
-            self.children['second'] = 1
-            self.children['others'] = int((total_pay - 60000) / 100000)
-        elif total_pay % 100000 == 0:
-            self.children['others'] = int(total_pay / 100000)
-        else:
-            print("Check function set_children")
-
-    def match_pay(self):
-        # Todo: 야간근로, 연장근로, 법내초과근로, 휴일근로 핸들링하기
-        print("Function match_pay starts here")
-        for k, v in self.neis_obj.pay.items():
-            # print("Key: " + str(k) + "\tValue: " + str(v))
-            if k in self.monthly_pay:
-                self.monthly_pay[k] = v
-                print("\t" + k + ": 매월지급")
-
-            elif k in self.non_periodical_pay:
-                self.non_periodical_pay[k] = v
-                print("\t" + k + ": 부정기지급")
-
-            elif k in self.rest_pay:
-                self.rest_pay[k] = v
-                print("\t" + k + ": 기타금품")
-
-            elif k == "가족수당(자녀)":
-                self.set_children(self.neis_obj.pay[k])
-                if self.children['first'] == 1:
-                    self.rest_pay['가족수당\n(직계존속, 첫째자녀)'] = 20000
-                if self.children['second'] == 1:
-                    self.rest_pay['가족수당\n(둘째자녀)'] = 60000
-                if self.children['others'] > 0:
-                    self.rest_pay['가족수당\n(셋째자녀 이후)'] = 100000 * self.children['others']
-                print("\t자녀 수" + str(self.children))
-
-            elif k == "시간외근무수당(초과분)":  # 야간근로, 연장근로, 법내초과근로, 휴일근로 핸들링
-                rate = self.form_obj.info['통상임금']
-                overtimeOne = self.form_obj.info['연장근로시간']
-                overtimeTwo = self.form_obj.info['법내초과근로시간']
-                holidayOne = self.form_obj.info['휴일근로시간']
-                holidayTwo = self.form_obj.info['휴일연장']
-                nightShift = self.form_obj.info['야간근로시간']
-
-                # 연장근로수당 계산법
-                h, m = get_time(overtimeOne)
-                f1 = int(h * 1.5 * rate + m * 1.5 * rate / 60)
-                h, m = get_time(overtimeTwo)
-                f2 = int(h * rate + m * rate / 60)
-                self.non_periodical_pay['연장근로수당'] = round_down(f1 + f2)
+    day = day - datetime.timedelta(days=1)
+    return day.day
 
 
-                # 휴일근로수당 계산법
-                h, m = get_time(holidayOne)
-                f1 = int(h * 1.5 * rate + m * 1.5 * rate / 60)
-                h, m = get_time(holidayTwo)
-                f2 = int(h * 2 * rate + m * 2 * rate / 60)
-                self.non_periodical_pay['휴일근로수당'] = round_down(f1 + f2)
+def top_field(payslip_book, obj1: NEISPayslip, obj2: Form):
+    print("Function: payslip.top_field starts")
+    try:
+        sheet = payslip_book.active
+        date = pay_date(obj1.month, obj1.year)
 
-                # 야간근로수당 계산법
-                h, m = get_time(nightShift)
-                f1 = int(h * 0.5 * rate + m * 0.5 * rate / 60)
-                self.non_periodical_pay['야간근로수당'] = round_down(f1)
+        sheet['B3'] = str(obj1.year) + "년 " + str(obj1.month) + "월 임금 명세서"
+        sheet['B3'].font = Font(color="000000", size=20)
+        sheet['B5'] = "소속 : " + obj1.school_name
+        sheet['B5'].font = Font(color="000000", size=14)
 
-            else:
-                if k == "급여총액":
-                    continue
-                print("[match - pay] Key 값:" + k + " 가 학교 임금명세서에 존재하지 않습니다.")
+        sheet['G5'] = "지급일 : " + str(obj1.year) + "." + str(obj1.month) + "." + str(date) + "."
 
-    def match_tax(self):
-        print("Function match_tax starts here")
-        for k, v in self.neis_obj.tax.items():
-            if k in self.deduction:
-                self.deduction[k] = v
-            else:
-                if k == "세금총액":
-                    continue
-                print("[match - tax] Key 값:" + k + " 가 학교 임금명세서에 존재하지 않습니다.")
+        sheet['D6'] = obj2.info['성명']
+        sheet['F6'] = obj2.info['생년월일']
+        sheet['H6'] = obj2.info['직종명']
+        sheet['D7'] = obj2.info['계약기간']
+        sheet['F7'] = obj2.info['근무형태']
+        sheet['H7'] = obj2.info['주 소정근로시간']
+        sheet['D8'] = str(num_date(obj1.month, obj1.year))
+        sheet['D9'] = obj2.info['신분변동제외한일수']
+        sheet['F8'] = obj2.info['월 소정근로시간']
+        sheet['G9'] = obj2.info['직계존속+첫째자녀수']
+        sheet['H9'] = obj2.info['셋째 자녀 이후수']
+        sheet['D10'] = obj2.info['연장근로시간']
+        sheet['D11'] = obj2.info['법내초과근로시간']
+        sheet['F10'] = obj2.info['휴일근로시간']
+        sheet['F11'] = obj2.info['휴일연장']
+        sheet['H10'] = obj2.info['야간근로시간']
+        sheet['D12'] = obj2.info['결근 등 무급일']
+        sheet['D13'] = obj2.info['결근 등 무급시간']
+        sheet['F12'] = obj2.info['근속수당 경력년수']
+        sheet['H12'] = obj2.info['통상임금']
 
-    def match_deduction(self):
-        print("Function match_deduction starts here")
-        for k, v in self.neis_obj.deduction.items():
-            if k in self.deduction:
-                self.deduction[k] = v
-            else:
-                if k == "공제총액":
-                    continue
-                print("[match - deduction] Key 값:" + k + " 가 학교 임금명세서에 존재하지 않습니다.")
+    except Exception as e:
+        print(e)
 
-    def match_total(self):
-        print("Function match_total starts here")
-        try:
-            self.total['급여 총액'] = self.neis_obj.pay['급여총액']
-            self.total['공제(세금) 총액'] = self.neis_obj.tax['세금총액'] + self.neis_obj.deduction['공제총액']
-            self.total['실수령액'] = self.neis_obj.net_pay
-        except Exception as e:
-            print("match_total" + str(e))
+
+def bottom_field(payslip_book, obj1: NEISPayslip, obj2: Form):
+    print("Function: payslip.bottom_field starts")
+    try:
+        sheet = payslip_book.active
+        rows = sheet['B17': 'I53']
+        for r in rows:
+            for cell in r:
+                if cell.value is not None and isinstance(cell.value, str):
+                    if read_only_str(cell.value) in obj1.pay:
+                        coordinate = cell.coordinate
+                        if 'C' in coordinate:
+                            coordinate = coordinate.replace('C', 'F')
+                        elif 'G' in coordinate:
+                            coordinate = coordinate.replace('G', 'H')
+                        elif read_only_str(cell.value) == "급여총액" or read_only_str(cell.value) == "실수령액":
+                            coordinate = coordinate.replace('B', 'F')
+
+                        sheet[coordinate] = obj1.pay[read_only_str(cell.value)]
+
+                    elif read_only_str(cell.value) == '공제(세금)총액':
+                        coordinate = cell.coordinate
+                        coordinate = coordinate.replace('G', 'H')
+
+                        if '공제총액' in obj1.pay and '세금총액' in obj1.pay:
+                            sheet[coordinate] = obj1.pay['공제총액'] + obj1.pay['세금총액']
+                        elif '공제총액' in obj1.pay:
+                            sheet[coordinate] = obj1.pay['공제총액']
+                        elif '세금총액' in obj1.pay:
+                            sheet[coordinate] = obj1.pay['세금총액']
+                        else:
+                            sheet[coordinate] = 0
+
+                    elif read_only_str(cell.value) == '가족수당(직계존속,첫째자녀)':
+                        if obj1.children_pay is not None:
+                            coordinate = cell.coordinate
+                            coordinate = coordinate.replace('C', 'F')
+
+                            sheet[coordinate] = obj1.children_pay['first']
+
+                    elif read_only_str(cell.value) == '가족수당(둘째자녀)':
+                        if obj1.children_pay is not None:
+                            coordinate = cell.coordinate
+                            coordinate = coordinate.replace('C', 'F')
+
+                            sheet[coordinate] = obj1.children_pay['second']
+
+                    elif read_only_str(cell.value) == '가족수당(셋째자녀이후)':
+                        if obj1.children_pay is not None:
+                            coordinate = cell.coordinate
+                            coordinate = coordinate.replace('C', 'F')
+
+                            sheet[coordinate] = obj1.children_pay['others']
+
+                    elif read_only_str(cell.value) in obj2.overpay:
+                        coordinate = cell.coordinate
+                        coordinate = coordinate.replace('C', 'F')
+
+                        sheet[coordinate] = obj2.overpay[read_only_str(cell.value)]
+
+                    elif "(인)" in read_only_str(cell.value):
+                        coordinate = cell.coordinate
+                        sheet[
+                            coordinate] = "※ 위 근로자 " + obj1.employee_name + "은(는) 임금명세서 1부를 교부받았습니다.       성명    " + obj1.employee_name + "      (인)                    " + \
+                                          str(obj1.year) + "." + str(obj1.month) + "." + str(
+                            pay_date(obj1.month, obj1.year)) + "."
+
+    except Exception as e:
+        print(e)
