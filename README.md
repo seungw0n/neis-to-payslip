@@ -1,25 +1,26 @@
 ## 인천광역시 교육청 교육감 소속 근로자 임금 명세서 프로그램
 
 ### 공지사항
+#### Ver 1.5: 2022-05-12
+#### *NEIS 급여명세서 xls, xlsx 모두 다 됩니다. [2022-05-12]*
 
-#### *Neis 급여명세서 저장 시 확장자를 xlsx 로 다운 받아주시기 부탁드립니다! - 업데이트 예정*
+#### *수당명 변경 가능합니다.*
+- NEIS 급여명세서와 payslip 에 있는 수당명이 다를 경우 변경해주세요.
+- 예시) 동봉된 payslip.xlsx 에 기본급에 본봉으로 바꿔주세요.
+- 필요없는 수당명일 경우
+    -  셀 클릭 -> 삭제 -> 행 전체 -> 확인
+- 행 전체 삭제 시 그 행에 있는 공제세금 수당명도 함께 삭제되오니, 삭제 된 공제/세금 내역을 
+공제세금내역란에 다시 추가하시기 바랍니다. 
 
-#### *NEIS 에서 xlsx 저장하는 법*
-    1. NEIS 급여명세서 들어가기
-    2. 엑셀 버튼 클릭하기
-    3. 엑셀 창에서 파일 -> 다른이름으로 저장
-    4. 밑 파일형식 -> Excel 통합문서 선택
-    5. 저장하기
     
 #### *보안 프로그램에 걸리는 이유는 "코드서명인증서"를 추가 안해서 그렇습니다.. 오해가 생길 수 있어 모든 코드를 오픈한 것입니다.* [자세히 알아보기 - by Tom Kim](https://blog.dramancompany.com/2015/12/%EC%B2%98%EC%9D%8C-windows-%EC%84%A4%EC%B9%98-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%B0%ED%8F%AC%ED%95%98%EB%8A%94-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EC%9C%84%ED%95%98%EC%97%AC/)
 
 ### 프로그램 다운로드
 ---
-    Last updated on 2022.04.20
+    Last updated on 2022.05.12
 
 다운로드 (구글 링크 클릭 후 "표준임금명세서_작성_프로그램" 다운로드):
     https://drive.google.com/drive/folders/1OkryYFAKQr9k5-WYc6q9GkozuDsPu2i5?usp=sharing
-
 
 ![캡처1](https://user-images.githubusercontent.com/34816905/163906633-655e39c0-205b-4544-878b-43f19d66dcea.PNG)
 
@@ -88,9 +89,18 @@
 - Packaging error: main.ui [Fixed]
 #### 2022-04-20
 - Not supported blank and zero value (pay, tax, and deduction). It causes blank on the cells. [Fixed on April 20]
-
+#### 2022-05-12
+- Now it supports both extensions: xls and xlsx. [Fixed on May 5]
+- Using xlrd to read xls extension.
 
 ### Error
 ---
 - Not supported xls format. [Todo: open xls file using xlrd and convert to xlsx]
 
+
+### Todo
+---
+- Modify NEISPayslip class
+- Modify SchoolPayslip class (수당명 수정 가능하게 만들기)
+- Matching between NEISPayslip and SchoolPayslip
+- Combining between Payslip and form object
