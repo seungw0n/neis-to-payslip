@@ -29,14 +29,22 @@ class WindowClass(QMainWindow, form_class):
         self.createPayslip.clicked.connect(self.payslip_button)
 
     def neis_button(self):
-        filepath = QFileDialog.getOpenFileName(self, "Select a Excel File", filter="*.xlsx *.xls")
+        filepath = QFileDialog.getOpenFileName(self, "Select an Excel File", filter="*.xlsx *.xls")
         print("Filepath : " + str(filepath))
 
         if filepath != ('', ''):
             filename = filepath[0].split("/")  # comes only filename
             self.labelNeisPath.setText(filename[-1])
+            format = filepath[0].split(".")[-1]
+            try:
+                if format == "xlsx":
+                    neis_wb = excel.open_excel(filepath[0])
+                elif format == "xls":
+                    neis_wb = excel.read_xls(filepath[0])
+            except:
+                self.warning(format + " 은 읽을 수 없습니다.")
 
-            neis_wb = excel.open_excel(filepath[0])
+
             try:
                 self.neis_obj = neis.NEISPayslip(neis_wb)
                 self.neis_obj.match()
