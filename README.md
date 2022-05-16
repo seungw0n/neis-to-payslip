@@ -12,6 +12,8 @@
 - 행 전체 삭제 시 그 행에 있는 공제세금 수당명도 함께 삭제되오니, 삭제 된 공제/세금 내역을 
 공제세금내역란에 다시 추가하시기 바랍니다. 
 
+#### *초과 시간 입력시 분으로 입력 가능합니다*
+- 2시간 8분, 128분 둘 다 가능합니다. 
     
 #### *보안 프로그램에 걸리는 이유는 "코드서명인증서"를 추가 안해서 그렇습니다.. 오해가 생길 수 있어 모든 코드를 오픈한 것입니다.* [자세히 알아보기 - by Tom Kim](https://blog.dramancompany.com/2015/12/%EC%B2%98%EC%9D%8C-windows-%EC%84%A4%EC%B9%98-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EB%B0%B0%ED%8F%AC%ED%95%98%EB%8A%94-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%93%A4%EC%9D%84-%EC%9C%84%ED%95%98%EC%97%AC/)
 
@@ -92,7 +94,9 @@
 #### 2022-05-12
 - Now it supports both extensions: xls and xlsx. [Fixed on May 5]
 - Using xlrd to read xls extension.
-
+#### 2022-05-16
+- Add functionality: accept time that contains only minute unit.
+- 
 ### Error
 ---
 - Not supported xls format. [Todo: open xls file using xlrd and convert to xlsx]
