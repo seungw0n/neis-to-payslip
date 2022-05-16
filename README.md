@@ -1,7 +1,7 @@
 ## 인천광역시 교육청 교육감 소속 근로자 임금 명세서 프로그램
 
 ### 공지사항
-#### Ver 1.5: 2022-05-12
+#### Ver 1.5: 2022-05-16
 #### *NEIS 급여명세서 xls, xlsx 모두 다 됩니다. [2022-05-12]*
 
 #### *수당명 변경 가능합니다.*
@@ -103,8 +103,4 @@
 
 
 ### Todo
----
-- Modify NEISPayslip class
-- Modify SchoolPayslip class (수당명 수정 가능하게 만들기)
-- Matching between NEISPayslip and SchoolPayslip
-- Combining between Payslip and form object
+
